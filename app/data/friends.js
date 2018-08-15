@@ -1,8 +1,8 @@
 // Array of friends names, photos and scores
 var friendArray = [
   {
-    "name":"Ahmed",
-    "photo":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+    "name":"Jason",
+    "photo":"",
     "scores":[
         5,
         1,
@@ -15,6 +15,37 @@ var friendArray = [
         4,
         1
       ]
+  },
+  {
+    "name":"Chris",
+    "photo":"",
+    "scores":[
+        5,
+        1,
+        4,
+        4,
+        5,
+        1,
+        2,
+        5,
+        4,
+        1
+      ]
+    },
+    {
+      "name":"Rich",
+      "photo":"",
+      "scores":[
+          5,
+          1,
+          4,
+          4,
+          5,
+          1,
+          2,
+          5,
+          4,
+          1
     }
 ];
 
