@@ -14,8 +14,9 @@ var PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routers
+app.use(express.static("app/public"));
 
+// Routers
 require("./app/routing/apiRoutes")(app);
 require("./app/routing/htmlRoutes")(app);
 
