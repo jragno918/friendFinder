@@ -1,39 +1,50 @@
-var path = require('path');
-var bodyParser = require('body-parser');
+var friends = require'../data/friends.js');
 
-
-var friends = require(path.join(__dirname, '../data/friends.js'))
 module.exports = function(app) {
-    app.get('/', function(req, res) {
+
+    // Get requests
+    app.get('/api/friends', function(req, res) {
         res.sendFile(path.join(__dirname, "../public/home.html"));
     });
-    app.get('/survey', function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/survey.html"));
-    })
-    app.get('/people', function(req, res) {
-        res.json(friends)
-    })
 
-    app.get('/:person', function(req, res) {
-        console.log(req.params.person)
-        for (friend in friends) {
+    // Post requests
 
-            if (friends[friend].name.toLowerCase() == req.params.person.toLowerCase()) {
+    app.post('/api/friends', function(req, res) {
+        // Obtain user inputs
+        var userInput = req.body;
 
-                console.log(friends[friend])
-                res.json(friends[friend])
-            }
+        var userResponse = userInput.scores;
+
+        var matchName = "";
+        var matchImage = "";
+        var totalDifference = 10000;
+
+        // Loop through all friends in the list to determind the highest scores
+        for (var i = 0; i < friends.length; i++) {
+
+          // Logic for differences between questions
+          var difference = 0;
+          for (var k = 0; k < userResponse.length; k++) {
+            difference += Math.abs(friends[i].scores[j] - userResponse[j]);
+          }
+          console.log('difference' + difference);
+
+          if (difference < totalDifference) {
+            console.log("Closest match found = " + difference);
+            console.log("Number 1 friends name is: " + friends[i].name);
+            console.log("Number 1 friend photo is: " + friends[i].photo);
+
+            totalDifference = difference;
+            matchName = friends[i].name;
+            matchImage = friends[i].photo;
+          }
         }
-        // res.json(friends)
-    })
-    app.post('/people/new', function(req, res) {
-        console.log('THIS IS WHAT I SEND FROM FRONT END TO THE BACK END')
-        console.log(req.body)
-        newApplicant = req.body
-        newApplicant.scores = newApplicant.scores.map(parseFloat)
-        newApplicant.total = parseInt(newApplicant.total)
-        friends.push(newApplicant)
 
+        // Add new friend
+        friends.push(userInput);
+
+        // Send response
+        res.json({status: "good", matchName: matchName, matchImage: matchImage});
 
     });
 };
