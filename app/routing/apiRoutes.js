@@ -1,11 +1,11 @@
-var friends = require'../data/friends.js');
+var friends = require('../data/friends.js');
 
 // Requests
 module.exports = function(app) {
 
     // Get requests
     app.get('/api/friends', function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/home.html"));
+        res.json(friends);
     });
 
     // Post requests
