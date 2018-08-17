@@ -2,6 +2,20 @@
 $('#submitButton').on('click', function(event) {
   event.preventDefault();
 
+  // Validate responses to each question
+  function formValidation() {
+    var isValid = true;
+
+    $("form-control").each(function() {
+      if ($(this).val() === "Please Select") {
+        isValid = false;
+      }
+    });
+    return isValid;
+  }
+
+  if (formValidation()) {
+
   // Gather user inputs
   var userInputData = {
     name: $('#userName').val(),
@@ -30,4 +44,8 @@ $('#submitButton').on('click', function(event) {
       // Pop open the modal dialog
       $('top-results-modal').modal('toggle');
     });
-});
+  }
+  else {
+    alert("All fields are required before submitting.")
+  }
+})
