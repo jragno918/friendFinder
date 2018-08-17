@@ -1,5 +1,6 @@
 var friends = require'../data/friends.js');
 
+// Requests
 module.exports = function(app) {
 
     // Get requests
