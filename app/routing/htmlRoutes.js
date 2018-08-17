@@ -1,16 +1,28 @@
-// Dependencies
 var path = require('path');
+var friends = require(path.join(__dirname, '../data/friends.js'))
 
-// Exports the html routes
+
 module.exports = function(app) {
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/home.html"));
+    });
+    app.get('/survey', function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/survey.html"));
+    })
+    app.get('/people', function(req, res) {
+        res.json(friends)
+    })
+    app.get('/:person', function(req, res) {
+        console.log(req.params.person)
+        for (friend in friends) {
 
-  // Route for the survey page
-  app.get("/survey", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/survey.html"));
-  });
+            if (friends[friend].name.toLowerCase() == req.params.person.toLowerCase()) {
 
-  // Route for the home page
-  app.get("*", function(app) {
-    res.sendFile(path.join(__dirname, "../public/home.html"));
-  });
+                console.log(friends[friend])
+                res.json(friends[friend])
+            }
+        }
+        // res.json(friends)
+    })
+
 };

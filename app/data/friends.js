@@ -2,7 +2,7 @@
 var friendArray = [
   {
     "name":"Jason",
-    "photo":"",
+    "photo":"https://vignette.wikia.nocookie.net/fridaythe13th/images/e/e5/Freddy_vs_Jason_%282%29.jpg/revision/latest/scale-to-width-down/350?cb=20171001043508",
     "scores":[
         5,
         1,
@@ -18,7 +18,7 @@ var friendArray = [
   },
   {
     "name":"Chris",
-    "photo":"",
+    "photo":"http://www.bollywoodlife.com/wp-content/uploads/2018/04/thor-1.jpg",
     "scores":[
         5,
         1,
@@ -34,7 +34,7 @@ var friendArray = [
     },
     {
       "name":"Rich",
-      "photo":"",
+      "photo":"https://i.kinja-img.com/gawker-media/image/upload/s--M1z0VoE6--/c_scale,f_auto,fl_progressive,q_80,w_800/zdy2wa4i9uuwevruwnyh.jpg",
       "scores":[
           5,
           1,
@@ -46,7 +46,8 @@ var friendArray = [
           5,
           4,
           1
+      ]
     }
-];
+]
 
 module.exports =  friendArray;

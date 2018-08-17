@@ -1,49 +1,39 @@
-// Dependencies
-var path =  requier('path');
+var path = require('path');
+var bodyParser = require('body-parser');
 
-// Import friends list
-var friends = require('../data/friends.js');
 
-// Export routes
+var friends = require(path.join(__dirname, '../data/friends.js'))
 module.exports = function(app) {
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/home.html"));
+    });
+    app.get('/survey', function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/survey.html"));
+    })
+    app.get('/people', function(req, res) {
+        res.json(friends)
+    })
 
-  // Get route to display a JSON of all possible friends
-  app.get("/api/friends", function(req, res) {
-    res.json(friends);
-  });
+    app.get('/:person', function(req, res) {
+        console.log(req.params.person)
+        for (friend in friends) {
 
-  // Post route that will handle incoming survey results
-  // and will also handle compatability logic
-  app.post("/api/friends", function(req,res) {
+            if (friends[friend].name.toLowerCase() == req.params.person.toLowerCase()) {
 
-      // Get user input
-      var userInput = req.body;
-
-      // Get response from user
-      var userResponse = userInput.scores;
-
-      // Logic for top friends
-      var topName = "";
-      var topImage = "";
-      var totalDiff= 5000;
-
-      for (var i = 0; i < friends.length; i++) {
-        var difference = 0;
-        for (var k = 0; k < userResponse.length; k++) {
-          difference += Math.abs(friends[i].scores[k] - userResponse[k]);
+                console.log(friends[friend])
+                res.json(friends[friend])
+            }
         }
+        // res.json(friends)
+    })
+    app.post('/people/new', function(req, res) {
+        console.log('THIS IS WHAT I SEND FROM FRONT END TO THE BACK END')
+        console.log(req.body)
+        newApplicant = req.body
+        newApplicant.scores = newApplicant.scores.map(parseFloat)
+        newApplicant.total = parseInt(newApplicant.total)
+        friends.push(newApplicant)
 
-        if (difference < totalDiff) {
-          totalDiff = difference;
-          topName = friends.[i].name;
-          topImage = friends[i].photo;
-        }
-      }
 
-    // Create a new user
-    friends.push(userInput);
-
-    // Give correct response
-    res.json({status: 'OK', topName: topName, topImage: topImage});
-  });
+    });
 };
